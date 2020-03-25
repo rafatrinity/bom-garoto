@@ -1,8 +1,7 @@
 const express = require("express")
-const app = express();
-app.use(express.json());
+const routes = express.Router();
 
-app.get('/users/:id',(request, response) => {
+routes.get('/users/:id',(request, response) => {
     const params = request.query;
     id = request.params;
     console.log(params, id);
@@ -10,4 +9,4 @@ app.get('/users/:id',(request, response) => {
     return response.send("hello world");
 })
 
-app.listen(3333);
+module.exports = routes;
