@@ -15,8 +15,8 @@ module.exports = {
   },
 
   async selectByName(request,response){
-    const ongs = await connection("ongs").select("*");
+    const ongs = await connection("ongs").where('name', 'like', '%'+request.params.name+'%');
     return response.json(ongs);
   }
-  
+
 };
