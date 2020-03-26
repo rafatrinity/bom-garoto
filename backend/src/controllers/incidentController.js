@@ -14,8 +14,24 @@ module.exports = {
     return response.json({ id });
   },
   async selectAll(request, response) {
-    const incidents = await connection("incidents").select("*");
-    return response.json(incidents);
+    const { page = 1, limit = 5 } = request.query;
+
+    const [count] = await connection("incidents").count();
+
+    const incidents = await connection("incidents")
+      .join("ongs", "ongs.id", "=", "incidents.ong_id")
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .select([
+        "incidents.*",
+        "ongs.name",
+        "ongs.email",
+        "ongs.cel",
+        "ongs.city",
+        "ongs.uf"
+      ]);
+    response.header("X-Total-Count", count["count(*)"]);
+    return response.status(200).json(incidents);
   },
   async delete(request, response) {
     const id = request.params.id;
