@@ -10,6 +10,8 @@ export class SessionService {
   constructor(private http: HttpClient) { }
 
   login(id: any) {
+    console.log(id);
+
     this.http.post(environment + 'login', id)
   }
 }
