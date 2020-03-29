@@ -35,6 +35,7 @@ describe("ONG", () => {
   it("retorna todas as ongs", async () => {
     const response = await resquest(app).get("/ongs");
     if (response.body.length > 0) {
+      expect(response.body[0]).toHaveProperty("id");
       expect(response.body[0]).toHaveProperty("name");
       expect(response.body[0]).toHaveProperty("email");
       expect(response.body[0]).toHaveProperty("cel");

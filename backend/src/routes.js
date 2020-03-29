@@ -26,7 +26,8 @@ routes.post("/ongs", celebrate({
 //incidents
 routes.get("/incidents", celebrate({
     [Segments.QUERY]: Joi.object().keys({
-        page: Joi.number()
+        page: Joi.number(),
+        limit: Joi.number()
     })
 }), incidentController.selectAll);
 routes.post("/incidents", incidentController.create);
