@@ -22,12 +22,24 @@ describe("ONG", () => {
     expect(response.body).toHaveProperty("id");
     expect(response.body.id).toHaveLength(8);
   });
-  it("busca uma ong pelo nome", async () => {
+  it("busca ongs pelo nome", async () => {
     const response = await resquest(app).get("/ongs/gat");
-    expect(response.body[0]).toHaveProperty("name");
-    expect(response.body[0]).toHaveProperty("email")
-    expect(response.body[0]).toHaveProperty("cel")
-    expect(response.body[0]).toHaveProperty("city")
-    expect(response.body[0]).toHaveProperty("uf")
+    if (response.body.length > 0) {
+      expect(response.body[0]).toHaveProperty("name");
+      expect(response.body[0]).toHaveProperty("email");
+      expect(response.body[0]).toHaveProperty("cel");
+      expect(response.body[0]).toHaveProperty("city");
+      expect(response.body[0]).toHaveProperty("uf");
+    }
+  });
+  it("retorna todas as ongs", async () => {
+    const response = await resquest(app).get("/ongs");
+    if (response.body.length > 0) {
+      expect(response.body[0]).toHaveProperty("name");
+      expect(response.body[0]).toHaveProperty("email");
+      expect(response.body[0]).toHaveProperty("cel");
+      expect(response.body[0]).toHaveProperty("city");
+      expect(response.body[0]).toHaveProperty("uf");
+    }
   });
 });
