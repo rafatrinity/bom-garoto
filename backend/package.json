@@ -4,7 +4,7 @@
   "description": "o Bom garoto 🐾 é um projeto que visa a integração de clinicas veterinárias com ONG's e doadores. esse projeto faz parte da semana OmniStack, da rocketseat e com o apoio e incentivo do professor Antonio Podgorski da UniCarioca, que propôs esse projeto como APS (atividade prática supervisionada).",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "nodemon src/index.js"
   },
   "repository": {
@@ -21,6 +21,7 @@
     "celebrate": "^12.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jest": "^25.2.3",
     "knex": "^0.20.13",
     "sqlite3": "^4.1.1"
   },
