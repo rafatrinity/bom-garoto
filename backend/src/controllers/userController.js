@@ -1,17 +1,21 @@
 const generateUniqueId = require("../utils/generateUnicId");
 const connection = require("../database/connection");
-
+const bcrypt = require("bcryptjs");
 module.exports = {
   async create(request, response) {
-    const { name, email, password, cel, city, uf } = request.body;
+    let { name, email, password, cel, city, uf } = request.body;
     const id = generateUniqueId();
     const user = connection("users")
       .where("email", email)
       .select("*");
-    if (user)
+    
+    if (user.id != undefined) {
       return response
         .status(401.1)
         .json({ error: "email/usuário já cadastrado" });
+    }
+    
+    password = await bcrypt.hash(password, 10);
     await connection("users").insert({
       id,
       name,
