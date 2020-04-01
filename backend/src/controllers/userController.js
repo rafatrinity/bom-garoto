@@ -5,16 +5,15 @@ module.exports = {
   async create(request, response) {
     let { name, email, password, cel, city, uf } = request.body;
     const id = generateUniqueId();
-    const user = connection("users")
+    const user = await connection("users")
       .where("email", email)
       .select("*");
     
-    if (user.id != undefined) {
+    if (user[0].id != undefined) {
       return response
         .status(401.1)
         .json({ error: "email/usuário já cadastrado" });
     }
-    
     password = await bcrypt.hash(password, 10);
     await connection("users").insert({
       id,
