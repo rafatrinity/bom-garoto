@@ -9,11 +9,11 @@ describe("profile", () => {
   afterAll(async () => {
     await connection.destroy();
   });
-  it("retorna incidents de uma ong especifica", async () => {
-    const ong = await resquest(app).get("/ongs");
+  it("retorna incidents de uma user especifica", async () => {
+    const user = await resquest(app).get("/users");
     const incident = await resquest(app)
       .get("/profile")
-      .set("authorization", ong.body[0].id)
+      .set("authorization", user.body[0].id)
       .send();
     expect(incident.status).toBe(200);
   });

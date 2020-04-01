@@ -4,12 +4,12 @@ const connection = require("../database/connection");
 module.exports = {
   async create(request, response) {
     const { title, description, value } = request.body;
-    const ong_id = request.headers.authorization;
+    const user_id = request.headers.authorization;
     const [id] = await connection("incidents").insert({
       title,
       description,
       value,
-      ong_id
+      user_id
     });
     return response.json({ id });
   },
@@ -19,28 +19,28 @@ module.exports = {
     const [count] = await connection("incidents").count();
 
     const incidents = await connection("incidents")
-      .join("ongs", "ongs.id", "=", "incidents.ong_id")
+      .join("users", "users.id", "=", "incidents.user_id")
       .limit(limit)
       .offset((page - 1) * limit)
       .select([
         "incidents.*",
-        "ongs.name",
-        "ongs.email",
-        "ongs.cel",
-        "ongs.city",
-        "ongs.uf"
+        "users.name",
+        "users.email",
+        "users.cel",
+        "users.city",
+        "users.uf"
       ]);
     response.header("X-Total-Count", count["count(*)"]);
     return response.status(200).json(incidents);
   },
   async delete(request, response) {
     const id = request.params.id;
-    const ong_id = request.headers.authorization;
+    const user_id = request.headers.authorization;
     const incident = await connection("incidents")
       .where("id", id)
-      .select("ong_id")
+      .select("user_id")
       .first();
-    if (incident.ong_id != ong_id) {
+    if (incident.user_id != user_id) {
       return response
         .status(401)
         .json({ error: "Usuario não tem permissão para deletar" });
