@@ -3,14 +3,13 @@ const userController = require("./controllers/userController");
 const incidentController = require("./controllers/incidentController");
 const profileController = require("./controllers/profileController");
 const sessionController = require("./controllers/sessionController");
-const auth = require("./controllers/auth");
+const auth = require("./controllers/authController");
 const {
     celebrate,
     Segments,
     Joi
 } = require("celebrate");
 const routes = express.Router();
-const core = express.Router();
 routes.use(auth);
 
 //users
@@ -47,13 +46,5 @@ routes.get("/profile", celebrate({
         authorization: Joi.string().required()
     }).unknown()
 }) , profileController.listuserIncidents);
-
-//session
-routes.post("/login", celebrate({
-    [Segments.BODY]: Joi.object().keys({
-        email: Joi.string().required().email(),
-        password: Joi.string().required().min(6),
-    })
-}), sessionController.auth);
 
 module.exports = routes;
