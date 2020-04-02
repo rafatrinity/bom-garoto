@@ -4,7 +4,7 @@ const connection = require("../database/connection");
 module.exports = {
   async create(request, response) {
     const { title, description, value } = request.body;
-    const user_id = request.headers.authorization;
+    const user_id = request.headers.from;
     const [id] = await connection("incidents").insert({
       title,
       description,
