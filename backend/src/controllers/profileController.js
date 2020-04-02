@@ -1,9 +1,16 @@
 const connection = require("../database/connection");
 module.exports = {
-  async listOngIncidents(require, response) {
-    const ong_id = require.headers.authorization
+  async myProfile(request, response) {
+    const user_id = request.userId;
     const incidents = await connection("incidents")
-      .where("ong_id", ong_id)
+      .where("user_id", user_id)
+      .select("*");
+    return response.status(200).json(incidents);
+  },
+  async listuserIncidents(request, response) {
+    const user_id = request.params.id;
+    const incidents = await connection("incidents")
+      .where("user_id", user_id)
       .select("*");
     return response.status(200).json(incidents);
   }
