@@ -3,7 +3,7 @@ const userController = require("./controllers/userController");
 const incidentController = require("./controllers/incidentController");
 const profileController = require("./controllers/profileController");
 const sessionController = require("./controllers/sessionController");
-const auth = require("./controllers/authController");
+const auth = require("./middlewares/auth.middleware");
 const {
     celebrate,
     Segments,
@@ -41,10 +41,7 @@ routes.delete("/incidents/:id", celebrate({
 }), incidentController.delete);
 
 //profile
-routes.get("/profile", celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-        from: Joi.string().required()
-    }).unknown()
-}) , profileController.listuserIncidents);
+routes.get("/profile", profileController.myProfile);
+routes.get("/profile/:id", profileController.listuserIncidents);
 
 module.exports = routes;

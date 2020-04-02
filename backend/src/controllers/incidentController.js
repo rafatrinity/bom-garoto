@@ -4,7 +4,7 @@ const connection = require("../database/connection");
 module.exports = {
   async create(request, response) {
     const { title, description, value } = request.body;
-    const user_id = request.headers.from;
+    const user_id = request.userId;
     const [id] = await connection("incidents").insert({
       title,
       description,
@@ -15,7 +15,6 @@ module.exports = {
   },
   async selectAll(request, response) {
     const { page = 1, limit = 5 } = request.query;
-
     const [count] = await connection("incidents").count();
 
     const incidents = await connection("incidents")
@@ -35,7 +34,7 @@ module.exports = {
   },
   async delete(request, response) {
     const id = request.params.id;
-    const user_id = request.headers.authorization;
+    const user_id = request.userId;
     const incident = await connection("incidents")
       .where("id", id)
       .select("user_id")

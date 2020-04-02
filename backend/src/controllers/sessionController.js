@@ -1,7 +1,7 @@
 const connection = require("../database/connection");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("../../auth.config.json");
+const config = require("../middlewares/auth.config.json");
 module.exports = {
   async auth(require, response) {
     const { email, password } = require.body;
