@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SessionService } from '../services/session.service'
 @Component({
   selector: 'app-login',
@@ -6,14 +7,25 @@ import { SessionService } from '../services/session.service'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  idOng: string = 'ola';
-  constructor(private session: SessionService) { }
-
+  constructor(private session: SessionService, private fb: FormBuilder) { }
+  login: FormGroup;
+  hide = true;
   ngOnInit(): void {
-  }
+    this.login = this.fb.group({
+      email: [null],
+      password: [null]
+    });
 
-  logar() {
-    this.session.login(this.idOng);
+  }
+  onSubmit() {
+    this.session.login(this.login.value).subscribe(
+      ok=>{
+        console.log(ok);
+      },
+      err=>{
+        console.error(err);
+      }
+    );
+
   }
 }
