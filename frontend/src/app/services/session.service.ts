@@ -12,6 +12,6 @@ export class SessionService {
   login(id: any) {
     console.log(id);
 
-    this.http.post(environment + 'login', id)
+    return this.http.post(environment + 'login', id)
   }
 }
