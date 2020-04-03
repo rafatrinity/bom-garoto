@@ -1,9 +1,9 @@
 const express = require("express");
-const userController = require("./controllers/userController");
-const incidentController = require("./controllers/incidentController");
-const profileController = require("./controllers/profileController");
-const sessionController = require("./controllers/sessionController");
-const auth = require("./middlewares/auth.middleware");
+const userController = require("../controllers/userController");
+const incidentController = require("../controllers/incidentController");
+const profileController = require("../controllers/profileController");
+const sessionController = require("../controllers/sessionController");
+const auth = require("../middlewares/auth.middleware");
 const {
     celebrate,
     Segments,
